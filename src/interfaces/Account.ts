@@ -4,4 +4,5 @@ export interface Account {
     amount: number;
     currency: String;
   }
+  created_at: string;
 }

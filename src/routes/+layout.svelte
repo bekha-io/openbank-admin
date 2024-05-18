@@ -1,10 +1,11 @@
 <script>
-	import Header from './Header.svelte';
+	import Navigation from './Navigation.svelte';
 	import './styles.css';
 </script>
 
 <div class="app">
-	<Header />
+	<div class="overlay hidden"></div>
+	<Navigation/>
 
 	<main>
 		<slot />
@@ -18,7 +19,7 @@
 <style>
 	.app {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		min-height: 100vh;
 	}
 
@@ -39,6 +40,9 @@
 		justify-content: center;
 		align-items: center;
 		padding: 12px;
+		position: absolute;
+		bottom: 0;
+		right: 24px;
 	}
 
 	footer a {

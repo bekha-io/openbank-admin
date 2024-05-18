@@ -1,6 +1,6 @@
 <script lang="ts">
   import { writable } from "svelte/store";
-  import { type Account } from "../../interfaces/Account";
+  import { type Account } from "../../../interfaces/Account";
 
   let options: Account[] = [];
   let flt: String;
@@ -42,7 +42,7 @@
     }
 
     fetch(
-      "http://192.168.0.146:8080/v1/accounts/search?" +
+      "http://127.0.0.1:8080/v1/accounts/search?" +
         new URLSearchParams([["id", flt.toString()]]),
       {
         method: "GET",
@@ -68,7 +68,7 @@
   }, 1000);
 </script>
 
-<h1>Счета. Управление и менеджмент</h1>
+<h1>Создать новую операцию по счету</h1>
 
 <form on:submit={onFormSubmit}>
   <div class="search">
