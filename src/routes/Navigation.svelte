@@ -18,10 +18,16 @@
 		<a href="/accounts/newOperation">Создать операцию</a>
 	</div>
 
+	<div>
+		<h3><i class="fa-solid fa-hand-holding-dollar"></i> Кредиты</h3>
+		<a href="/loans/calculator">Кредитный калькулятор</a>
+	</div>
+
 	<div class="section">
 		<h3><i class="fa-solid fa-circle-user"></i> Сотрудники</h3>
 		<a href="/employees/search">Поиск сотрудников</a>
 	</div>
+
 
 	<a class="logout" href="/logout">Выйти</a>
 </div>
