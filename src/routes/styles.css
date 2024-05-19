@@ -146,3 +146,11 @@ table {
     cursor: pointer;
   }
 }
+
+.clickable:hover {
+  cursor: pointer;
+}
+
+textarea {
+  resize: none;
+}

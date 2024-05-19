@@ -2,32 +2,14 @@
   import { onMount } from "svelte";
   import type { IndividualCustomer } from "../../../interfaces/Customer";
   import type { Account } from "../../../interfaces/Account";
+  import {getCustomer, getCustomerAccounts} from "../../../api/customers";
   export let data: { id: string };
 
   let customer: IndividualCustomer;
   let accounts: Account[];
-  onMount(function () {
-    fetch(`http://127.0.0.1:8080/v1/customers/${data.id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => (customer = res))
-      .catch((err) => console.error(err));
-
-    fetch(`http://127.0.0.1:8080/v1/customers/${data.id}/accounts`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => (accounts = res))
-      .catch((err) => console.error(err));
+  onMount(async function () {
+    customer = await getCustomer(data.id);
+    accounts = await getCustomerAccounts(data.id);
   });
 </script>
 

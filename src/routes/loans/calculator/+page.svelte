@@ -1,46 +1,50 @@
 <script lang="ts">
+  import { calculateLoanSchedule } from "../../../api/loans";
   import type { LoanInstallment } from "../../../interfaces/LoanInstallment";
 
   let amount: number;
   let currency: string;
   let duration: number;
   let interest_rate: number;
-  let repay_starts_at: Date;
+  let repay_starts_at: string = new Date().toJSON().slice(0, 10);
 
   let installments: LoanInstallment[];
 
-  function calculateClicked(e: Event) {
+  async function calculateClicked(e: Event) {
     e.preventDefault();
 
-    fetch(`http://127.0.0.1:8080/v1/loans/calculate`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        repay_starts_at: new Date(repay_starts_at).toISOString(),
-        amount,
-        currency,
-        duration,
-        interest_rate,
-      }),
-    })
-      .then((response) => response.json().then((data) => (installments = data)))
-      .catch((err) => alert(err));
+    let schedule = await calculateLoanSchedule({
+      repay_starts_at: new Date(repay_starts_at).toISOString(),
+      amount: amount,
+      currency: currency,
+      duration: duration,
+      interest_rate: interest_rate,
+    });
+
+    if (schedule) {
+      installments = schedule;
+    }
   }
 </script>
 
 <div>
   <h1>Кредитный калькулятор</h1>
-  <div class="inputs">
-    <input bind:value={amount} type="number" placeholder="Сумма кредита" />
-    <input bind:value={currency} type="text" placeholder="Валюта" />
+  <form on:submit={calculateClicked} class="inputs">
     <input
+      required
+      bind:value={amount}
+      type="number"
+      placeholder="Сумма кредита"
+    />
+    <input required bind:value={currency} type="text" placeholder="Валюта" />
+    <input
+      required
       bind:value={duration}
       type="number"
       placeholder="Срок кредита (в мес.)"
     />
     <input
+      required
       bind:value={interest_rate}
       max="1"
       step="0.05"
@@ -48,15 +52,16 @@
       placeholder="Процентная ставка (0.01 - 1)"
     />
     <input
+      required
       on:change
       bind:value={repay_starts_at}
       type="date"
       placeholder="Дата первого погашения"
     />
-  </div>
-  <input on:click={calculateClicked} type="submit" value="Рассчитать" />
+    <button type="submit">Рассчитать</button>
+  </form>
   {#if installments}
-    <table>
+    <table id="installments-schedule">
       <tr>
         <th>Дата</th>
         <th>Сумма к оплате</th>

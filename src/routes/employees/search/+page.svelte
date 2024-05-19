@@ -1,39 +1,25 @@
 <script lang="ts">
   import type { Employee } from "../../../interfaces/Employee";
+  import { searchEmployees } from "../../../api/employees";
 
   let lookup: string;
   let lastLookup: string;
 
   let employees: Employee[];
 
-  setInterval(() => {
+  setInterval(async () => {
     if (lastLookup == lookup || lookup == null) {
       return;
     }
+    try {
+      let items = await searchEmployees(lookup);
 
-    fetch(
-      "http://127.0.0.1:8080/v1/employees/search?" +
-        new URLSearchParams([["query", lookup.toString()]]),
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((resp) => resp.json())
-      .then((items) => {
-        if (items.length == 0) {
-          return;
-        }
-
-        if (items.error != null) {
-          return;
-        }
-
+      if (items) {
         employees = items;
-      });
-    lastLookup = lookup;
+      }
+    } finally {
+      lastLookup = lookup;
+    }
   }, 1000);
 </script>
 
@@ -58,9 +44,8 @@
   </table>
 </div>
 
-
 <style>
-    table {
-        width: 100%;
-    }
+  table {
+    width: 100%;
+  }
 </style>
