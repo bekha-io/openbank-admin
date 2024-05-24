@@ -12,6 +12,8 @@
 		"@fontsource/fira-mono": "^4.5.10",
 		"@neoconfetti/svelte": "^1.0.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/adapter-node": "^5.0.1",
+		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"svelte": "^4.2.7",
@@ -24,6 +26,7 @@
 	"type": "module",
 	"dependencies": {
 		"axios": "^1.6.8",
+		"dotenv": "^16.4.5",
 		"print-js": "^1.6.0",
 		"svelte-persisted-store": "^0.9.2",
 		"yup": "^1.4.0"

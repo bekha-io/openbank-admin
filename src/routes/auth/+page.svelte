@@ -6,7 +6,8 @@
   let email: string;
   let password: string;
 
-  async function onFormSubmit() {
+  async function onFormSubmit(e: Event) {
+    e.preventDefault();
     let resp = await authenticate(email, password);
     if (resp?.employee && resp?.token) {
       contextUser.set(resp.employee);
@@ -22,7 +23,7 @@
     Для работы с системой, пожалуйста, введите электронную почту и пароль. Для
     получения доступа обратитесь к администратору систему
   </p>
-  <form on:submit={onFormSubmit}>
+  <form method="post" on:submit={onFormSubmit}>
     <div class="input-group">
       <label for="email">Электронная почта</label>
       <input type="email" name="email" id="email" bind:value={email} />

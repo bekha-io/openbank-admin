@@ -1,6 +1,5 @@
 <script>
-// @ts-nocheck
-
+  // @ts-nocheck
   import { onMount } from "svelte";
   import Navigation from "./Navigation.svelte";
   import "./styles.css";
